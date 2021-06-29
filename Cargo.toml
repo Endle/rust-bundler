@@ -26,7 +26,7 @@ syn = { version = "1.0.73", features = ["full", "printing", "visit-mut"] }
 rustfmt-nightly = { version = "1.4.21", optional = true }
 
 [dev-dependencies]
-rand = { git = "https://github.com/Endle/rust-goldenfile", branch = "master" }
+goldenfile = { git = "https://github.com/Endle/rust-goldenfile", branch = "master" }
 #goldenfile = "1.1.0"
 assert_cli = "0.6.3"
 
