@@ -28,6 +28,6 @@ fn golden(mint:&mut Mint, entry: std::io::Result<DirEntry> ) {
     );
     let output = bundler::bundle(&input_path);
     write!(output_file, "{}", output).expect("write! failed");
-    output_file.flush();
+    output_file.flush().expect("flush failed");
 
 }
