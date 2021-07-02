@@ -1,3 +1,0 @@
-[submodule "tests/testdata/input/rust_codeforce_template"]
-	path = tests/testdata/input/rust_codeforce_template
-	url = https://github.com/Endle/rust_codeforce_template.git
