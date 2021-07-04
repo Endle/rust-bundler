@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        rust: [stable, 1.49.0]
+        rust: [stable]
         include:
           - os: ubuntu-latest
             sccache-path: /home/runner/.cache/sccache
