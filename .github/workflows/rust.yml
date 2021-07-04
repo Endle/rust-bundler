@@ -12,13 +12,13 @@ env:
 
 jobs:
   build:
-    name: Cargo test (${{ matrix.os }})
+    name: Cargo test  (${{ matrix.rust }}) (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        rust: [stable, nightly, 1.49.0]
+        rust: [stable, 1.49.0]
         include:
           - os: ubuntu-latest
             sccache-path: /home/runner/.cache/sccache
@@ -55,7 +55,7 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}-${{ matrix.rust }}
           restore-keys: |
             ${{ runner.os }}-cargo-
       - name: Save sccache
@@ -63,7 +63,7 @@ jobs:
         continue-on-error: false
         with:
           path: ${{ matrix.sccache-path }}
-          key: ${{ runner.os }}-sccache-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-sccache-${{ hashFiles('**/Cargo.toml') }}-${{ matrix.rust }}
           restore-keys: |
             ${{ runner.os }}-sccache-
       - name: Start sccache server
