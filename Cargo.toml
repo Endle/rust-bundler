@@ -29,4 +29,5 @@ rustfmt-nightly = { version = "1.4.21", optional = true }
 goldenfile = "1.1.0"
 assert_cli = "0.6.3"
 
-
+[features]
+inner_rustfmt = ["rustfmt-nightly"]

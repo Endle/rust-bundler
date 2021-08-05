@@ -190,6 +190,7 @@ fn read_file(path: &Path) -> Option<String> {
     Some(buf)
 }
 
+#[cfg(feature = "inner_rustfmt")]
 fn prettify(code: String) -> String {
     use rustfmt_nightly::{Input, Session, Config, EmitMode, Verbosity};
     let mut out = Vec::with_capacity(code.len() * 2);
@@ -202,4 +203,26 @@ fn prettify(code: String) -> String {
         session.format(input).expect("rustfmt failed");
     }
     String::from_utf8(out).unwrap()
+}
+
+#[cfg(not(feature = "inner_rustfmt"))]
+fn prettify(code: String) -> String {
+    use std::io::Write;
+    use std::process;
+    let mut command = process::Command::new("rustfmt")
+        .stdin(process::Stdio::piped())
+        .stdout(process::Stdio::piped())
+        .stderr(process::Stdio::piped())
+        .spawn()
+        .expect("Failed to spawn rustfmt process");
+    {
+        let mut stdin = command.stdin.take().unwrap();
+        write!(stdin, "{}", code).unwrap();
+    }
+    let out = command.wait_with_output().unwrap();
+    if !out.status.success() {
+       panic!("rustfmt failed");
+    }
+    let stdout = out.stdout;
+    String::from_utf8(stdout).unwrap()
 }
