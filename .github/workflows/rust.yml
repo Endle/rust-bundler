@@ -70,6 +70,12 @@ jobs:
         run: sccache --start-server
 
 # Real tests starts here
+      - name: Check version
+      - run: rustup --version && rustc --version && cargo --version
+      - name: Install rustfmt
+        run: |
+          rustup component add rustfmt
+          which rustfmt && rustfmt --version
       - name: Build
         run: cargo build --verbose
       - name: Run tests
