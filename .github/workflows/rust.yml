@@ -71,7 +71,7 @@ jobs:
 
 # Real tests starts here
       - name: Check version
-      - run: rustup --version && rustc --version && cargo --version
+        run: rustup --version && rustc --version && cargo --version
       - name: Install rustfmt
         run: |
           rustup component add rustfmt
